@@ -6,13 +6,8 @@ export const ServiceAdd = () => {
   const item = useSelector((state) => state.serviceAdd);
   const dispatch = useDispatch();
 
-  console.log(item);
-
   const handleChange = (evt) => {
     const { name, value } = evt.target;
-
-    console.log("name value: ", name, value);
-
     dispatch(changeServiceField(name, value));
   };
 
@@ -20,6 +15,7 @@ export const ServiceAdd = () => {
     evt.preventDefault();
     dispatch(addService(item.name, item.price));
 
+    // console.log("item value: ", item);
     // dispatch(changeServiceField("name", ""));
     // dispatch(changeServiceField("price", ""));
   };
