@@ -1,6 +1,11 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { changeServiceField, addService } from "../actions/actionCreators";
+import {
+  changeServiceField,
+  addService,
+  cancelService,
+  saveService,
+} from "../actions/actionCreators";
 
 export const ServiceAdd = () => {
   const item = useSelector((state) => state.serviceAdd);
@@ -11,26 +16,51 @@ export const ServiceAdd = () => {
     dispatch(changeServiceField(name, value));
   };
 
+  const handleReset = () => {
+    dispatch(cancelService());
+    dispatch(changeServiceField("name", ""));
+    dispatch(changeServiceField("price", ""));
+  };
+
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    dispatch(addService(item.name, item.price));
-
-    // console.log("item value: ", item);
-    // dispatch(changeServiceField("name", ""));
-    // dispatch(changeServiceField("price", ""));
+    if (item.edit.status === false) {
+      dispatch(addService(item.name, item.price));
+    } else {
+      dispatch(saveService(item.edit.id, item.name, item.price));
+      dispatch(cancelService());
+    }
+    dispatch(changeServiceField("name", ""));
+    dispatch(changeServiceField("price", ""));
   };
   return (
     <form onSubmit={handleSubmit}>
       <label>
         Name:
-        <input name="name" onChange={handleChange} value={item.name} />
+        <input
+          type="text"
+          name="name"
+          onChange={handleChange}
+          value={item.name}
+        />
       </label>
       <label>
         Price:
-        <input name="price" onChange={handleChange} value={item.price} />
+        <input
+          type="number"
+          name="price"
+          onChange={handleChange}
+          value={item.price}
+        />
       </label>
-
-      <button type="submit">Save</button>
+      {item.edit.status === false ? (
+        <input type="submit" value="Add" />
+      ) : (
+        <>
+          <input type="submit" value="Save" />
+          <input type="reset" onClick={handleReset} value="Cancel" />
+        </>
+      )}
     </form>
   );
 };
