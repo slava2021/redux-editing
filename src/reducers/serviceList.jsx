@@ -1,6 +1,7 @@
 import { nanoid } from "nanoid";
 import {
   ADD_SERVICE,
+  FILTER_SERVICE,
   REMOVE_SERVICE,
   SAVE_SERVICE,
 } from "../actions/actionTypes";
@@ -30,6 +31,18 @@ export default function serviceListReducer(state = initialState, action) {
     case REMOVE_SERVICE:
       const { id } = action.payload;
       return state.filter((service) => service.id != id);
+    case FILTER_SERVICE: {
+      const { value } = action.payload;
+      const boolean = new Boolean(value);
+      console.log("filter: ", boolean);
+      if (boolean === false) {
+        return state;
+      } else {
+        return state.filter((service) =>
+          service.name.toLocaleLowerCase().includes(value.toLocaleLowerCase())
+        );
+      }
+    }
     default:
       return state;
   }
