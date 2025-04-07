@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { filterService } from "../actions/actionCreators";
+import { filterService } from "../store/actionCreators";
 
 const Filter = () => {
   const dispatch = useDispatch();

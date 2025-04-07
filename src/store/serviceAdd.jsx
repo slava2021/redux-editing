@@ -2,7 +2,7 @@ import {
   CHANGE_SERVICE_FIELD,
   EDIT_SERVICE,
   CANCEL_SERVICE,
-} from "../actions/actionTypes";
+} from "./actionTypes";
 
 const initialState = {
   name: "",

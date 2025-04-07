@@ -4,7 +4,7 @@ import {
   FILTER_SERVICE,
   REMOVE_SERVICE,
   SAVE_SERVICE,
-} from "../actions/actionTypes";
+} from "./actionTypes";
 
 const initialState = [
   { id: nanoid(), name: "Замена стекла", price: 21000 },
