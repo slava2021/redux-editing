@@ -11,11 +11,15 @@ const initialState = [
   { id: nanoid(), name: "Замена дисплея", price: 25000 },
 ];
 
+let stateStore = initialState;
+
 export default function serviceListReducer(state = initialState, action) {
   switch (action.type) {
     case ADD_SERVICE:
       const { name, price } = action.payload;
-      return [...state, { id: nanoid(), name, price: Number(price) }];
+      stateStore = [...state, { id: nanoid(), name, price: Number(price) }];
+      return stateStore;
+
     case SAVE_SERVICE:
       {
         const { id, name, price } = action.payload;
@@ -26,17 +30,19 @@ export default function serviceListReducer(state = initialState, action) {
           )
         );
       }
-      return [...state];
+      stateStore = [...state];
+      return stateStore;
 
     case REMOVE_SERVICE:
       const { id } = action.payload;
-      return state.filter((service) => service.id != id);
+      stateStore = state.filter((service) => service.id != id);
+      return stateStore;
+
     case FILTER_SERVICE: {
       const { value } = action.payload;
-      const boolean = new Boolean(value);
-      console.log("filter: ", boolean);
-      if (boolean === false) {
-        return state;
+      // console.log(value.length);
+      if (value.length === 0) {
+        return stateStore;
       } else {
         return state.filter((service) =>
           service.name.toLocaleLowerCase().includes(value.toLocaleLowerCase())
